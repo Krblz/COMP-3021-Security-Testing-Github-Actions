@@ -34,9 +34,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
       - name: Bandit-scan
-        uses: shundor/python-bandit-scan@v1.0
-        with: 
-            path: "."
-            level: high
-            confidence: high
-            exit_zero: true           
+        run: |
+          pip install bandit
+          bandit -r . -lll -ii  # level: high, confidence: high  
