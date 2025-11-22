@@ -1,5 +1,5 @@
 ---
-name: Lint
+name: Code-Scan
 
 on: # yamllint disable-line rule:truthy
   push: null
@@ -9,7 +9,7 @@ permissions: {}
 
 jobs:
   build:
-    name: Lint
+    name: Lint_and_Bandit
     runs-on: ubuntu-latest
 
     permissions:
