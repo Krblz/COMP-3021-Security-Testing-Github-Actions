@@ -36,7 +36,14 @@ jobs:
       - name: Bandit-scan
         run: |
           pip install bandit
-          echo "=== Bandit Scan Starting ==="
-          # This will always show output, even if no files found
-          bandit -r . -v || echo "Bandit completed (may have found no Python files)"
-          echo "=== Bandit Scan Complete ==="
+          # Count Python files
+          PYTHON_FILES=$(find . -name "*.py" | wc -l)
+          echo "Found $PYTHON_FILES Python files"
+          
+          if [ $PYTHON_FILES -gt 0 ]; then
+            echo "Running Bandit scan on Python files..."
+            bandit -r . -lll -ii
+          else
+            echo "No Python files found - Bandit has nothing to scan"
+            echo "This is why Bandit runs for 0s"
+          fi
