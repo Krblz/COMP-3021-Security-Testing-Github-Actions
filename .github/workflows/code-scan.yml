@@ -5,7 +5,9 @@ on:
   push:
   pull_request:
 
-permissions: {}
+permissions:
+    contents: read
+    security-events: write
 
 jobs:
   build:
@@ -35,6 +37,7 @@ jobs:
             else
                 echo "No Python files found - Bandit has nothing to scan"
             fi
+            
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
