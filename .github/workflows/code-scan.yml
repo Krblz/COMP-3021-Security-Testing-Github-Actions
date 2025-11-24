@@ -9,7 +9,7 @@ permissions: {}
 
 jobs:
   build:
-    name: Lint_and_Bandit
+    name: Automated_Scanning
     runs-on: ubuntu-latest
 
     permissions:
@@ -21,17 +21,24 @@ jobs:
 
       - name: Lint
         run: |
-          echo "Your lint command here"
+            echo "Your lint command here"
 
       - name: Bandit-scan
         run: |
-          pip install bandit
-          PYTHON_FILES=$(find . -name "*.py" | wc -l)
-          echo "Found $PYTHON_FILES Python files"
+            pip install bandit
+            PYTHON_FILES=$(find . -name "*.py" | wc -l)
+            echo "Found $PYTHON_FILES Python files"
 
-          if [ $PYTHON_FILES -gt 0 ]; then
-            echo "Running Bandit scan..."
-            bandit -r . -lll -ii
-          else
-            echo "No Python files found - Bandit has nothing to scan"
-          fi
+            if [ $PYTHON_FILES -gt 0 ]; then
+                echo "Running Bandit scan..."
+                bandit -r . -lll -ii
+            else
+                echo "No Python files found - Bandit has nothing to scan"
+            fi
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+            languages: python
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
