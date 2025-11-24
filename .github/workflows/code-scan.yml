@@ -5,7 +5,9 @@ on:
   push:
   pull_request:
 
-permissions: {}
+permissions:
+    contents: read
+    security-events: write
 
 jobs:
   build:
